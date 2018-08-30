@@ -25,7 +25,9 @@ public class StartGame extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GerenciadorDeJanela gerenciadorDeJanela = GerenciadorDeJanela.getInstance();
-        gerenciadorDeJanela.mostrarJanela(primaryStage, gerenciadorDeJanela.carregarComponente("JogoDaForca"), "Jogo da força").show();
+        Stage stage = gerenciadorDeJanela.mostrarJanela(primaryStage, gerenciadorDeJanela.carregarComponente("JogoDaForca"), "Jogo da força");
+        stage.setResizable(false);
+        stage.show();
     }
 
 }

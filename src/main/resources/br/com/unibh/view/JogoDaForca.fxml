@@ -5,14 +5,21 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" fx:id="apPrincipal" prefHeight="400.0" prefWidth="705.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.181" fx:controller="br.com.unibh.controller.JogoDaForcaController">
+<AnchorPane id="AnchorPane" fx:id="apPrincipal" prefHeight="426.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.unibh.controller.JogoDaForcaController">
     <stylesheets>
         <URL value="@/br/com/unibh/view/styles/jogodaforca.css" />
     </stylesheets>
    <children>
       <Canvas fx:id="cForca" height="359.0" layoutX="14.0" layoutY="14.0" width="263.0" />
-      <Button layoutX="606.0" layoutY="348.0" mnemonicParsing="false" onAction="#onTentativa" prefHeight="31.0" prefWidth="76.0" text="Testar" />
-      <TextField layoutX="322.0" layoutY="351.0" prefHeight="25.0" prefWidth="253.0" promptText="Digite uma letra ou arrisque a palavra" />
+      <AnchorPane layoutX="322.0" layoutY="348.0" AnchorPane.rightAnchor="15.0">
+         <children>
+            <Button layoutX="284.0" mnemonicParsing="false" onAction="#onTentativa" prefHeight="31.0" prefWidth="76.0" text="Testar" />
+            <TextField fx:id="tfTeste" layoutY="3.0" prefHeight="25.0" prefWidth="253.0" promptText="Digite uma letra ou arrisque a palavra" />
+            <Button layoutX="284.0" layoutY="39.0" mnemonicParsing="false" onAction="#novoJogo" prefHeight="25.0" prefWidth="76.0" text="Novo jogo" />
+         </children>
+      </AnchorPane>
+      <HBox fx:id="vbForca" alignment="BOTTOM_LEFT" layoutX="277.0" layoutY="14.0" prefHeight="313.0" prefWidth="508.0" spacing="5.0" AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="15.0" />
    </children>
 </AnchorPane>

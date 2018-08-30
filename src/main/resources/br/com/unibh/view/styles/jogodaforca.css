@@ -5,3 +5,7 @@
 .mainFxmlClass {
     -fx-background-color: white;
 }
+.label-text{
+    -fx-font-size: 55px;
+    -fx-font-weight: bold;
+}
