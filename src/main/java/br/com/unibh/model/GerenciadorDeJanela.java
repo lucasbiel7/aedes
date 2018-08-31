@@ -62,4 +62,5 @@ public class GerenciadorDeJanela {
         }
         return parent;
     }
+
 }

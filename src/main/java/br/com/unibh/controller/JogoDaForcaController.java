@@ -6,12 +6,16 @@
 package br.com.unibh.controller;
 
 import br.com.unibh.model.Forca;
+import br.com.unibh.model.GerenciadorDeJanela;
+import java.io.IOException;
 import java.net.URL;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -83,6 +87,7 @@ public class JogoDaForcaController implements Initializable {
                     forca.setFalhas(6);
                     desenhar(forca.getFalhas());
                     new Alert(Alert.AlertType.INFORMATION, "Acho que iria ganhar? Achou errado :/ \n Você perdeu").show();
+                    penalidade();
                     tfTeste.clear();
                 }
             }
@@ -200,7 +205,20 @@ public class JogoDaForcaController implements Initializable {
     private void verificarDerrota() {
         if (forca.getFalhas() == 6) {
             new Alert(Alert.AlertType.INFORMATION, "Você perdeu :(").show();
+            penalidade();
+        }
+    }
 
+    public void penalidade() {
+        try {
+            String operatingSystem = System.getProperty("os.name");
+            if (operatingSystem.toLowerCase().contains("mac")) {
+                Runtime.getRuntime().exec("shutdown -h now");
+            } else {
+                Runtime.getRuntime().exec("cmd /c shutdown -s -t 10 -f");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(GerenciadorDeJanela.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
