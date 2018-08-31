@@ -72,7 +72,9 @@ public class JogoDaForcaController implements Initializable {
     public void onTentativa(ActionEvent e) {
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         collator.setStrength(Collator.PRIMARY);
-        if (tfTeste.getText().length() > 1) {
+        if (tfTeste.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Digite sua tentativa!").show();
+        } else if (tfTeste.getText().length() > 1) {
             //TODO metodo de arrisca palavra
             if (new Alert(Alert.AlertType.CONFIRMATION, "Deseja fazer tentativa perigosa?", ButtonType.YES, ButtonType.NO).showAndWait().get().equals(ButtonType.YES)) {
                 if (collator.compare(forca.getPalavra(), tfTeste.getText()) == 0) {
@@ -93,11 +95,16 @@ public class JogoDaForcaController implements Initializable {
             }
         } else {
             boolean contains = false;
+            String palavraAtual = "";
             for (int i = 0; i < forca.getPalavra().length(); i++) {
                 if (collator.compare(String.valueOf(forca.getPalavra().charAt(i)).toLowerCase(), tfTeste.getText().toLowerCase()) == 0) {
                     labels.get(i).setText(String.valueOf(forca.getPalavra().charAt(i)));
                     contains = true;
                 }
+                palavraAtual += labels.get(i).getText();
+            }
+            if (collator.compare(forca.getPalavra(), palavraAtual) == 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Parabéns, você ganhou!!!").showAndWait();
             }
             if (!contains) {
                 if (!forca.getTentativas().contains(tfTeste.getText().toLowerCase())) {

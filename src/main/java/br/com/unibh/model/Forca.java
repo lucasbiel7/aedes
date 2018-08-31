@@ -14,7 +14,7 @@ import java.util.Random;
  * @author 11724814
  */
 public class Forca {
-    
+
     private String palavra;
     private int falhas;
 
@@ -22,7 +22,7 @@ public class Forca {
     private List<String> tentativas;
 
     public Forca() {
-        palavrasPossiveis=new ArrayList<>();
+        palavrasPossiveis = new ArrayList<>();
         tentativas = new ArrayList<>();
         palavrasPossiveis.add("Banana");
         palavrasPossiveis.add("Paralelepípedo");
@@ -32,8 +32,7 @@ public class Forca {
         palavrasPossiveis.add("Ortodoxas");
         palavrasPossiveis.add("Lucas");
     }
-    
-    
+
     public String getPalavra() {
         return palavra;
     }
@@ -58,15 +57,18 @@ public class Forca {
         this.tentativas = tentativas;
     }
 
-    public void gerarPalavra(){
-        this.palavra  = palavrasPossiveis.get(new Random().nextInt(palavrasPossiveis.size()-1));
+    public void gerarPalavra() {
+        this.palavra = palavrasPossiveis.get(new Random().nextInt(palavrasPossiveis.size() - 1));
     }
 
     public void iniciar() {
-        gerarPalavra();
+        String ultimaPalavra = palavra;
+        do {
+            gerarPalavra();
+        } while (palavra.equals(ultimaPalavra));
         falhas = 0;
         tentativas.clear();
-        
+
     }
-    
+
 }
