@@ -28,6 +28,9 @@ public class Forca {
         palavrasPossiveis.add("Paralelepípedo");
         palavrasPossiveis.add("Panela");
         palavrasPossiveis.add("Despedida");
+        palavrasPossiveis.add("Necessidade");
+        palavrasPossiveis.add("Ortodoxas");
+        palavrasPossiveis.add("Lucas");
     }
     
     
@@ -55,8 +58,6 @@ public class Forca {
         this.tentativas = tentativas;
     }
 
-   
-    
     public void gerarPalavra(){
         this.palavra  = palavrasPossiveis.get(new Random().nextInt(palavrasPossiveis.size()-1));
     }

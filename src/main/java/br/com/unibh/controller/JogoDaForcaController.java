@@ -18,10 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -58,7 +60,7 @@ public class JogoDaForcaController implements Initializable {
     @FXML
     public void novoJogo(ActionEvent e) {
         forca.iniciar();
-        desenhar(forca.getFalhas()); 
+        desenhar(forca.getFalhas());
         montarComponentePalavra();
     }
 
@@ -67,6 +69,23 @@ public class JogoDaForcaController implements Initializable {
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         collator.setStrength(Collator.PRIMARY);
         if (tfTeste.getText().length() > 1) {
+            //TODO metodo de arrisca palavra
+            if (new Alert(Alert.AlertType.CONFIRMATION, "Deseja fazer tentativa perigosa?", ButtonType.YES, ButtonType.NO).showAndWait().get().equals(ButtonType.YES)) {
+                if (collator.compare(forca.getPalavra(), tfTeste.getText()) == 0) {
+                    for (int i = 0; i < forca.getPalavra().length(); i++) {
+                        if (collator.compare(String.valueOf(forca.getPalavra().charAt(i)).toLowerCase(), String.valueOf(tfTeste.getText().charAt(i)).toLowerCase()) == 0) {
+                            labels.get(i).setText(String.valueOf(forca.getPalavra().charAt(i)));
+                        }
+                    }
+                    new Alert(Alert.AlertType.INFORMATION, "Parabéns, você ganhou!!!").showAndWait();
+
+                } else {
+                    forca.setFalhas(6);
+                    desenhar(forca.getFalhas());
+                    new Alert(Alert.AlertType.INFORMATION, "Acho que iria ganhar? Achou errado :/ \n Você perdeu").show();
+                    tfTeste.clear();
+                }
+            }
         } else {
             boolean contains = false;
             for (int i = 0; i < forca.getPalavra().length(); i++) {
@@ -80,9 +99,10 @@ public class JogoDaForcaController implements Initializable {
                     forca.setFalhas(forca.getFalhas() + 1);
                     desenhar(forca.getFalhas());
                     forca.getTentativas().add(tfTeste.getText().toLowerCase());
-                }else{
+                    verificarDerrota();
+                } else {
                     //TODO colocar aqui mensagem que você ja utilizou essa tentativa
-                    new Alert(Alert.AlertType.INFORMATION,"Você ja utilizou essa letra como alternativa!").show();
+                    new Alert(Alert.AlertType.INFORMATION, "Você ja utilizou essa letra como alternativa!").show();
                 }
             }
 
@@ -99,6 +119,8 @@ public class JogoDaForcaController implements Initializable {
     public void desenhar(int falhas) {
         GraphicsContext graphicsContext = cForca.getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, cForca.getWidth(), cForca.getHeight());
+        graphicsContext.setStroke(Color.BLACK);
+        graphicsContext.setFill(Color.BLACK);
         switch (falhas) {
             case 1:
                 desenharCabeca(graphicsContext);
@@ -110,7 +132,8 @@ public class JogoDaForcaController implements Initializable {
             case 3:
                 desenharCabeca(graphicsContext);
                 desenharCorpo(graphicsContext);
-//                desenharBracoDireito(graphicsContext);
+                desenharBracoDireito(graphicsContext);
+                break;
             case 4:
                 desenharCabeca(graphicsContext);
                 desenharCorpo(graphicsContext);
@@ -125,6 +148,8 @@ public class JogoDaForcaController implements Initializable {
                 desenharPernaDireita(graphicsContext);
                 break;
             case 6:
+                graphicsContext.setStroke(Color.RED);
+                graphicsContext.setFill(Color.RED);
                 desenharCabeca(graphicsContext);
                 desenharCorpo(graphicsContext);
                 desenharBracoDireito(graphicsContext);
@@ -169,6 +194,13 @@ public class JogoDaForcaController implements Initializable {
             label.getStyleClass().add("label-text");
             vbForca.getChildren().add(label);
             labels.add(label);
+        }
+    }
+
+    private void verificarDerrota() {
+        if (forca.getFalhas() == 6) {
+            new Alert(Alert.AlertType.INFORMATION, "Você perdeu :(").show();
+
         }
     }
 }
